@@ -34,7 +34,7 @@ if ('Invoke-Expression' -in $commands -or 'iex' -in $commands) {
     throw 'Installer must download the release and launch a verified local script, without nested Invoke-Expression.'
 }
 $installerText = [IO.File]::ReadAllText((Join-Path $Root 'install.ps1'))
-foreach ($required in @('SHA256SUMS.json', 'Get-FileHash', 'SHA256')) {
+foreach ($required in @('SHA256SUMS.json', 'ComputeHash', 'SHA256')) {
     if (!$installerText.Contains($required)) { throw "Installer missing verification component: $required" }
 }
 Write-Host 'PASS installer verification structure'

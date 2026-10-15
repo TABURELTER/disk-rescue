@@ -45,6 +45,13 @@ function Invoke-DiskRescueInstall {
             if($input){$input.Dispose()};if($output){$output.Dispose()};if($response){$response.Dispose()};$client.Dispose()
         }
     }
+    function Get-ReleaseFileSha256([string]$Path) {
+        # Use .NET directly; Get-FileHash may be unavailable in inherited module environments.
+        $hash=[Security.Cryptography.SHA256]::Create()
+        $input=[IO.File]::OpenRead($Path)
+        try {return ([BitConverter]::ToString($hash.ComputeHash($input))).Replace('-','').ToLowerInvariant()}
+        finally {$input.Dispose();$hash.Dispose()}
+    }
     Add-Type -AssemblyName System.Net.Http
     Add-Type -AssemblyName System.IO.Compression
     [Net.ServicePointManager]::SecurityProtocol=[Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
@@ -72,12 +79,12 @@ function Invoke-DiskRescueInstall {
     $target=Assert-InstallPath (Join-Path $versions ($RequestedVersion+'-'+$zipHash.Substring(0,12).ToLowerInvariant()))
     $app=Join-Path $target 'Recover-Disk.ps1'
     if(Test-Path -LiteralPath $target) {
-        if(!(Test-Path -LiteralPath $app -PathType Leaf) -or (Get-FileHash -LiteralPath $app -Algorithm SHA256).Hash -ne $scriptHash) {
+        if(!(Test-Path -LiteralPath $app -PathType Leaf) -or (Get-ReleaseFileSha256 $app) -ne $scriptHash) {
             throw "Existing installation checksum failed. Choose another -InstallRoot. Nothing overwritten: $target"
         }
     } else {
         Receive-ReleaseFile "$release/DiskRescue-win-x64.zip" $archive
-        if((Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash -ne $zipHash) {throw "Release ZIP checksum mismatch. File retained: $archive"}
+        if((Get-ReleaseFileSha256 $archive) -ne $zipHash) {throw "Release ZIP checksum mismatch. File retained: $archive"}
         $null=[IO.Directory]::CreateDirectory($unzipped)
         $stream=[IO.File]::OpenRead($archive)
         $zip=[IO.Compression.ZipArchive]::new($stream,[IO.Compression.ZipArchiveMode]::Read)
@@ -93,7 +100,7 @@ function Invoke-DiskRescueInstall {
             }
         } finally {$zip.Dispose();$stream.Dispose()}
         foreach($name in $allowed){if(!$seen.ContainsKey($name)){throw "Release file missing: $name"}}
-        if((Get-FileHash -LiteralPath (Join-Path $unzipped 'Recover-Disk.ps1') -Algorithm SHA256).Hash -ne $scriptHash) {throw 'Extracted program checksum mismatch.'}
+        if((Get-ReleaseFileSha256 (Join-Path $unzipped 'Recover-Disk.ps1')) -ne $scriptHash) {throw 'Extracted program checksum mismatch.'}
         [IO.Directory]::Move($unzipped,$target)
     }
     # Only these known files were created in this unique staging directory. No recursive deletion.
