@@ -5,7 +5,7 @@
 В PowerShell:
 
 ```powershell
-irm 'https://raw.githubusercontent.com/TABURELTER/disk-rescue/main/install.ps1' | iex
+irm 'https://raw.githubusercontent.com/TABURELTER/disk-rescue/refs/heads/main/install.ps1' | iex
 ```
 
 Установщик загружает закреплённый релиз v2.1.0, сверяет SHA-256 и запускает установленный скрипт в отдельном процессе PowerShell. Программа устанавливается для текущего пользователя в `%LOCALAPPDATA%\DiskRescue`; системная политика выполнения не меняется. Повторный запуск установщика открывает программу без необходимости вручную искать архив.

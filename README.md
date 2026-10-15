@@ -11,7 +11,7 @@
 Откройте **PowerShell** и выполните:
 
 ```powershell
-irm 'https://raw.githubusercontent.com/TABURELTER/disk-rescue/main/install.ps1' | iex
+irm 'https://raw.githubusercontent.com/TABURELTER/disk-rescue/refs/heads/main/install.ps1' | iex
 ```
 
 Команда загружает установщик из этого репозитория. Он скачивает релиз **v2.1.0**, проверяет SHA-256 архива, распаковывает программу в `%LOCALAPPDATA%\DiskRescue` и открывает терминальное меню. Интернет нужен для загрузки; установленная программа работает офлайн. Git, Python и отдельная установка движков пользователю не нужны.
