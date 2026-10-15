@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-15",
+  "script_sha256": "6d6f7f21ee7dbfc6ad70df799984e1ac07574f678610b33f90224daf79bfa503",
+  "cli": [
+    {
+      "case": "fat32-mbr",
+      "exit_code": 0,
+      "seconds": 4.474,
+      "source_unchanged": true,
+      "hash_checks": {
+        "readme.txt": true,
+        "Документы/Отчёт 2026.txt": true,
+        "Документы/Вложенная папка/данные.bin": true,
+        "Документы/same.txt": true,
+        "Фото/same.txt": true,
+        "Фото/empty.txt": true
+      },
+      "all_hashes_match": true
+    },
+    {
+      "case": "damaged-mbr",
+      "exit_code": 0,
+      "seconds": 4.215,
+      "source_unchanged": true,
+      "found_expected_offset": true
+    },
+    {
+      "case": "ntfs",
+      "exit_code": 0,
+      "seconds": 4.646,
+      "source_unchanged": true,
+      "hash_checks": {
+        "\\res1.dat": true,
+        "\\sing1.dat": true,
+        "\\mult1.dat": true,
+        "\\frag1.dat": true,
+        "\\frag2.dat": true,
+        "\\dir1\\mult2.dat": true,
+        "\\dir1\\dir2\\frag3.dat": true,
+        "\\dir3\\sing2.dat": true
+      },
+      "all_hashes_match": true
+    },
+    {
+      "case": "adversarial",
+      "exit_code": 0,
+      "seconds": 5.124,
+      "source_unchanged": true,
+      "hash_checks": {
+        "readme.txt": true,
+        "Документы/Отчёт 2026.txt": true,
+        "Документы/Вложенная папка/данные.bin": true,
+        "Документы/same.txt": true,
+        "Фото/same.txt": true,
+        "Фото/empty.txt": true,
+        "Folder/inside.txt": true,
+        "FOLDER": true,
+        "CON.txt": true,
+        "trailing.": true,
+        "trailing ": true,
+        "..\\escape.txt": true,
+        "SAME.TXT": true,
+        "GONE.TXT": true
+      },
+      "all_hashes_match": true
+    }
+  ],
+  "menu": {
+    "exit": 0,
+    "main_menu": true,
+    "browser": true,
+    "recovery": true,
+    "unicode_image_unchanged": true,
+    "manifest_count": 1,
+    "existing_destination_rejected": true
+  },
+  "photorec_exact_sha256": {
+    "png": "798ad83107334b70e460abe1f41e6fa5bfa5426806a422727cd944ef199fa5b0",
+    "zip": "3900e9e28b3bbe3bcfbe891edbc9431f0155364e75bea967d9e356c61ab7f682"
+  },
+  "physical_devices_opened": false
+}

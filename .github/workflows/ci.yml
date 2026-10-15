@@ -1,0 +1,40 @@
+name: Windows build and image-only tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check source privacy and bundled archive
+        run: python tests/check_public.py
+      - name: Build standalone script and release ZIP
+        run: python scripts/build.py
+      - name: Verify release checksums and embedded runtime
+        run: python tests/check_public.py --dist dist
+      - name: Parse scripts with Windows PowerShell 5.1
+        shell: powershell
+        run: ./tests/check_powershell.ps1
+      - name: Recover synthetic images and check original bytes
+        run: python tests/smoke.py --report dist/TEST-RESULTS.json
+      - name: Save verified build and test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: DiskRescue-windows
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14

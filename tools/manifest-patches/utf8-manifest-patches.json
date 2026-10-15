@@ -1,0 +1,26 @@
+[
+  {
+    "name": "fls.exe",
+    "original_sha256": "5be3b65d6e5966d3e29f43631aa6dc3c86f69c5acf504b0be16442f2851385d3",
+    "patched_sha256": "b7fbef5d77e908d9c3dfd51d5af5619b48d00c0ef8ed6ab49bc57a8a27889287",
+    "patch": "Embedded RT_MANIFEST activeCodePage=UTF-8; no executable code changed"
+  },
+  {
+    "name": "fsstat.exe",
+    "original_sha256": "c548fe9ddc7d7aa946d3c7be2f904359ee23d235934f4350128bedec8eef451b",
+    "patched_sha256": "715cebab2d06f0494f1a92c43a6ce10c01f0a31d536ae216b4bac80ec0cf0592",
+    "patch": "Embedded RT_MANIFEST activeCodePage=UTF-8; no executable code changed"
+  },
+  {
+    "name": "mmls.exe",
+    "original_sha256": "a5cd58e6f70b5b413a2730812d5f3582ab93fce8864e2c1981bd1431784cb69e",
+    "patched_sha256": "9090e2c2f7dd89f89c66415ec1b15e9793a3ac35748f67a560403c54f83bf08d",
+    "patch": "Embedded RT_MANIFEST activeCodePage=UTF-8; no executable code changed"
+  },
+  {
+    "name": "icat.exe",
+    "original_sha256": "5a765c240becaac6e555d8391de03912b9638e38fc68fd3200afe189e4166928",
+    "patched_sha256": "82e3b1b965d2dcc4353c45987a952c1f62d9aacbdf572c37f6ea4c7a549933f5",
+    "patch": "Embedded RT_MANIFEST activeCodePage=UTF-8; no executable code changed"
+  }
+]
